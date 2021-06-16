@@ -1,6 +1,4 @@
-
-
-cookies = {
+login_cookies = [
     {
       "name": "visitor_signup_gql_token",
       "value": "oauth2v2_7a89c810d2e1ab969420a3d6b212e39d",
@@ -9,13 +7,13 @@ cookies = {
       "expires": -1,
       "httpOnly": False,
       "secure": True,
-      "sameSite": None,
+      "sameSite": 'None',
     },
- 
+
     {
-        "name": "visitor_signup_gql_token",
-        "value": "oauth2v2_7a89c810d2e1ab969420a3d6b212e39d",
-        "domain": ".upwork.com",
+        "name": "G_ENABLED_IDPS",
+        "value": "google",
+        "domain": ".www.upwork.com",
         "path": '/',
         "expires": -1,
         "httpOnly": False,
@@ -24,8 +22,8 @@ cookies = {
     },
     
     {
-        "name": 'visitor_signup_gql_token',
-        "value": 'oauth2v2_7a89c810d2e1ab969420a3d6b212e39d',
+        "name": 'cdContextId',
+        "value": '2',
         "domain": '.upwork.com',
         "path": '/',
         "expires": -1,
@@ -35,8 +33,8 @@ cookies = {
     },
 
     {
-        "name": 'visitor_signup_gql_token',
-        "value": 'oauth2v2_7a89c810d2e1ab969420a3d6b212e39d',
+        "name": 'bmuid',
+        "value": '1623852276011-42544A7C-2B9D-455A-B801-89B03BE62A5C',
         "domain": '.upwork.com',
         "path": '/',
         "expires": -1,
@@ -44,4 +42,114 @@ cookies = {
         "secure": True,
         "sameSite": 'None',
     },
-}
+
+    {
+        "name": 'XSRF-TOKEN',
+        "value": 'e6b76a3d214c22b3e3a9ff4d00b2bb86',
+        "domain": '.upwork.com',
+        "path": '/',
+        "expires": -1,
+        "httpOnly": False,
+        "secure": True,
+        "sameSite": 'None',
+    },
+
+    {
+        "name": '_pxhd',
+        "value": 'eTDItHmsaBb2uIuswxcdSmvfSIut2aGbWv20fBubK27zCMnZA3o0c7DfepQJckqwPayujTabj6cz1x5LLAht8A==:sinhCr5POyxqbuq9nfJgPYgF3Y2PLmgIHplIQIgJ7gLkFP99vRu1p7gLb2esgUd302rJl-3VHTbu1AVvFwn5xMXIw9xgXxCDJbrgMhjZjnI=',
+        "domain": '.upwork.com',
+        "path": '/',
+        "expires": -1,
+        "httpOnly": False,
+        "secure": True,
+        "sameSite": 'None',
+    },
+
+    {
+        "name": 'cf_chl_prog',
+        "value": 'a12',
+        "domain": '.upwork.com',
+        "path": '/',
+        "expires": -1,
+        "httpOnly": False,
+        "secure": True,
+        "sameSite": 'None',
+    },
+
+    {
+        "name": 'upwork_bc',
+        "value": '1623852276017_185.220.102.254.1623852271747000',
+        "domain": '.upwork.com',
+        "path": '/',
+        "expires": -1,
+        "httpOnly": False,
+        "secure": True,
+        "sameSite": 'None',
+    },
+
+    {
+        "name": '__cfruid',
+        "value": 'fe0bd5b1f5447af02bb8b439e563b39f59deeb62-1623852205',
+        "domain": '.upwork.com',
+        "path": '/',
+        "expires": -1,
+        "httpOnly": True,
+        "secure": True,
+        "sameSite": 'None',
+    },
+
+    {
+        "name": 'cf_chl_2',
+        "value": '1623852276017_185.220.102.254.1623852271747000',
+        "domain": '.upwork.com',
+        "path": '/',
+        "expires": -1,
+        "httpOnly": False,
+        "secure": True,
+        "sameSite": 'None',
+    },
+
+    {
+        "name": 'cf_clearance',
+        "value": 'cf6830c56d3cc1d05dcaf2e5ae6ca665931b5a61-1623852271-0-250',
+        "domain": '.upwork.com',
+        "path": '/',
+        "expires": -1,
+        "httpOnly": True,
+        "secure": True,
+        "sameSite": 'None',
+    },
+
+    {
+        "name": 'enabled_ff',
+        "value": 'CI11132Air2Dot75,CI9570Air2Dot5,!CI10270Air2Dot5QTAllocations,!CI10857Air3Dot0',
+        "domain": '.upwork.com',
+        "path": '/',
+        "expires": -1,
+        "httpOnly": False,
+        "secure": True,
+        "sameSite": 'None',
+    },
+
+    {
+        "name": 'visitor_id',
+        "value": '185.220.102.254.1623852271747000',
+        "domain": '.upwork.com',
+        "path": '/',
+        "expires": -1,
+        "httpOnly": False,
+        "secure": True,
+        "sameSite": 'None',
+    },
+
+    {
+        "name": '__cf_bm',
+        "value": '8bbd0e918274924dadc35526807ddbc356d7be7a-1623852198-1800-AZ8vNv34LKvyvXNq2n2fDaMrT9Ql2fMVACq3w+96pwmfsOZdGDvT5r0Wq1EhCR+5Ii0LKSWHKb9ju8paMDwOVTI=',
+        "domain": '.upwork.com',
+        "path": '/',
+        "expires": -1,
+        "httpOnly": True,
+        "secure": True,
+        "sameSite": 'None',
+    },
+]

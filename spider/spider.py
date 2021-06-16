@@ -1,5 +1,7 @@
 from dotenv import dotenv_values
 
+import cookies
+
 login_credentials = dotenv_values(".env")
 
 from playwright.sync_api import sync_playwright
@@ -34,21 +36,11 @@ def view_profile(page):
 
 with sync_playwright() as p:
     # head with delay, so we don't need to solve reCaptcha
+    print(cookies.login_cookies)
     browser = p.chromium.launch()
     context = browser.new_context()
-    context.add_cookies([
-        {
-            'name': 'visitor_signup_gql_token',
-            'value': 'oauth2v2_7a89c810d2e1ab969420a3d6b212e39d',
-            'domain': '.upwork.com',
-            'path': '/',
-            'expires': -1,
-            'httpOnly': False,
-            'secure': True,
-            'sameSite': 'None',
-        }
-    ])
-    token = "0e8ebf203768bd53b216512a5b7866d577808131-1623852198-0-AZk2Hl-PU7OGbhYcGLqiLHG20mFgtXbe04xUhz794Bib6UYybuebNmWcnHbkxC4x88DNi6_h4FfcoU21XzNLKypqnjuAsENP-elnD10DvQgceiT-fONYJZ9PElHzfLGruw8CTAGCWpQbHCdPMg6olHAC8ymxif7oNJVnoRbGDE-DuT59sbkDcE6D5OV-KWOpFKAjXP425gZvKZIfyIvPHVaYaKKxev1a0KR_YDLrs01Ci7B8iAla79rFjji3qKi6KfFy_HKoDqoba9PbnIPFoal8-GxK8pPCTYPPsFNKKZaJ-0u5S0MQtvL2vzGSvh05fqXOAFizu2JugDCYzvnHZFYSGXowH_YNVVqL6df6v6JyuRtYPhAF-gwOr43jRzHae3yTChkV8fhWE995Bo2rY79dm6ubyyINOAu2_Z6J184os6MH8bYhS_gKBFUfq59FSEzlcb20a3M9rAREoy6vMMzSG-W_tI6gMSdeGjXfTY9X7CGpbfvGrrXKtKaxS6-Qw9bAenmHAUON-arESP6nc_x199UnMzzuLUSH5IHUDcfdOIymwwkalvA_G5lpy1WRQwuqNArhdIoROAPEbi-xC1Gz677KseVI1vuUxnjfCAdYUt8xHEtza_ukC0PJDwVuCZthkmksKLRbDVqrC2GmyNLkZtwzWEvJ07PaeHOR_kf5"
+    context.add_cookies(cookies.login_cookies)
+    
     page = context.new_page()
     
     username_login(page)
