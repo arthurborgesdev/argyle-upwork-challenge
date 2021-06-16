@@ -9,8 +9,9 @@ USERNAME = login_credentials["USERNAME"]
 PASSWORD = login_credentials["PASSWORD"]
 SECRET = login_credentials["SECRET"]
 USER_AGENT = ("Mozilla/5.0 (X11; Linux x86_64)"
-"AppleWebKit/537.36 (KHTML, like Gecko)"
-"Chrome/90.0.4430.93 Safari/537.36")
+              "AppleWebKit/537.36 (KHTML, like Gecko)"
+              "Chrome/90.0.4430.93 Safari/537.36"
+              )
 
 
 class LoginHandling:
@@ -29,53 +30,53 @@ class LoginHandling:
         page.click('#login_control_continue')
 
 
-def scan_main_page(page):
-    # interact to trigger auto-wait
-    page.click("text=My Profile")
-    current_page = page.content()
-    print(get_visibility(current_page))
-    print(get_hours(current_page))
-    print(get_progress(current_page))
+class MainPage:
+
+    def scan_main_page(self, page):
+        # interact to trigger auto-wait
+        page.click("text=My Profile")
+        current_page = page.content()
+        print(self.get_visibility(current_page))
+        print(self.get_hours(current_page))
+        print(self.get_progress(current_page))
+
+    def get_visibility(current_page, visibility_text="No visibility scanned"):
+        main_portal = BeautifulSoup(current_page, 'html.parser')
+        visibility_div = main_portal.find_all("div",
+                                              class_="fe-ui-profile-visibility"
+                                              )
+        for _vis in visibility_div:
+            visibility_text = _vis.find(class_="ng-binding").string
+        return visibility_text
+
+    def get_hours(current_page, hours_text="No hours scanned"):
+        main_portal = BeautifulSoup(current_page, 'html.parser')
+        hours_div = main_portal.select("div.fe-ui-availability.ng-scope")
+        for _hours in hours_div:
+            hours_text = _hours.find(class_="ng-binding").string
+        return hours_text
+
+    def get_progress(current_page, progress_text="No progress scanned"):
+        main_portal = BeautifulSoup(current_page, 'html.parser')
+        progress_div = main_portal.find_all(class_="progress-bar")
+        for _progress in progress_div:
+            progress_text = _progress.find(class_="ng-binding").string
+        return progress_text
 
 
-def get_visibility(current_page, visibility_text="No visibility scanned"):
-    main_portal = BeautifulSoup(current_page, 'html.parser')
-    visibility_div = main_portal.find_all("div",
-                                          class_="fe-ui-profile-visibility"
-                                          )
-    for _vis in visibility_div:
-        visibility_text = _vis.find(class_="ng-binding").string
-    return visibility_text
+class ProfilePage:
 
+    def view_profile(self, page):
+        page.click("text=View Profile")
+        current_page = page.content()
+        print(self.get_name(current_page))
 
-def get_hours(current_page, hours_text="No hours scanned"):
-    main_portal = BeautifulSoup(current_page, 'html.parser')
-    hours_div = main_portal.select("div.fe-ui-availability.ng-scope")
-    for _hours in hours_div:
-        hours_text = _hours.find(class_="ng-binding").string
-    return hours_text
-
-
-def get_progress(current_page, progress_text="No progress scanned"):
-    main_portal = BeautifulSoup(current_page, 'html.parser')
-    progress_div = main_portal.find_all(class_="progress-bar")
-    for _progress in progress_div:
-        progress_text = _progress.find(class_="ng-binding").string
-    return progress_text
-
-
-def get_name(current_page, name_text="No name scanned"):
-    main_portal = BeautifulSoup(current_page, 'html.parser')
-    name_div = main_portal.find_all(class_="progress-bar")
-    for _name in name_div:
-        name_text = _name.find(class_="ng-binding").string
-    return name_text
-
-
-def view_profile(page):
-    page.click("text=View Profile")
-    current_page = page.content()
-    print(get_name(current_page))
+    def get_name(current_page, name_text="No name scanned"):
+        main_portal = BeautifulSoup(current_page, 'html.parser')
+        name_div = main_portal.find_all(class_="progress-bar")
+        for _name in name_div:
+            name_text = _name.find(class_="ng-binding").string
+        return name_text
 
 
 with sync_playwright() as p:
@@ -91,7 +92,8 @@ with sync_playwright() as p:
     login.password_login(page)
     # Add a verification to secret login here before
     # secret_login(page)
-    scan_main_page(page)
-    # view_profile(page)
+
+    # profile = ProfilePage()
+    # profile.view_profile(page)
 
     browser.close()
