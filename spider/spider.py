@@ -14,8 +14,8 @@ SECRET = login_credentials["SECRET"]
 
 def username_login(page):
     page.goto(PORTAL_LINK)
-    print(context.cookies())
-    page.screenshot(path="screenshot.png")
+    # print(context.cookies())
+    page.screenshot(path="upwork.png")
     page.fill('#login_username', USERNAME)
     page.click('#login_password_continue')
 
@@ -36,13 +36,14 @@ def view_profile(page):
 
 with sync_playwright() as p:
     # head with delay, so we don't need to solve reCaptcha
-    print(cookies.login_cookies)
-    browser = p.chromium.launch()
-    context = browser.new_context()
-    context.add_cookies(cookies.login_cookies)
-    
+    browser = p.chromium.launch(headless=True, slow_mo=100)
+    context = browser.new_context(
+        storage_state="state.json", 
+        user_agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36"
+    )
     page = context.new_page()
-    
+    # page.goto("https://bot.incolumitas.com")
+    # page.screenshot(path="incolumitas.png")
     username_login(page)
     #password_login(page)
     # Add a verification to secret login here before
