@@ -12,6 +12,8 @@ SECRET = login_credentials["SECRET"]
 
 def username_login(page):
     page.goto(PORTAL_LINK)
+    print(context.cookies())
+    page.screenshot(path="screenshot.png")
     page.fill('#login_username', USERNAME)
     page.click('#login_password_continue')
 
@@ -25,22 +27,37 @@ def secret_login(page):
 
 def view_profile(page):
     page.click("text=View Profile")
+    page.pause()
     current_page = browser.page_source
     my_profile = BeautifulSoup(page, 'html.parser') 
     print(my_profile.h1.string)
 
 with sync_playwright() as p:
     # head with delay, so we don't need to solve reCaptcha
-    browser = p.chromium.launch(headless=False, slow_mo=100)
-    page = browser.new_page()
+    browser = p.chromium.launch()
+    context = browser.new_context()
+    context.add_cookies([
+        {
+            'name': 'visitor_signup_gql_token',
+            'value': 'oauth2v2_7a89c810d2e1ab969420a3d6b212e39d',
+            'domain': '.upwork.com',
+            'path': '/',
+            'expires': -1,
+            'httpOnly': False,
+            'secure': True,
+            'sameSite': 'None',
+        }
+    ])
+
+    page = context.new_page()
     
     username_login(page)
-    password_login(page)
+    #password_login(page)
     # Add a verification to secret login here before
     # secret_login(page)
-    view_profile(page)
+    #view_profile(page)
     
-    print(page.title())
+    #print(page.title())
     browser.close()
 
 soup = BeautifulSoup("<h1>Hello World!</h1>", 'html.parser')

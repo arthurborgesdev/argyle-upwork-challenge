@@ -36,10 +36,23 @@ To get a local copy up and running follow these simple example steps.
 
   (Change the ... for your own credentials)
 
+- Select the correct python interpreter (with virtual environment):
+
+  Press `Ctrl+Shift+P` on VSCode
+
+  Select the desired python environment
+
+  Now you can run the scripts
+
 ### Setup
 TBD
 ### Install
-TBD
+
+- Install `pyenv` using homebrew or other mecanism using [these](https://github.com/pyenv/pyenv) instructions.
+- Install `poetry`.
+- Run `poetry install` to install packages
+
+
 ### Usage
 TBD
 ### Run tests
