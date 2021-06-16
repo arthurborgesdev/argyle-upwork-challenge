@@ -29,6 +29,7 @@ def scan_main_page(page):
     current_page = page.content()
     print(get_visibility(current_page))
     print(get_hours(current_page))
+    print(get_progress(current_page))
 
 def get_visibility(current_page, visibility_text="No visibility scanned"):
     main_portal = BeautifulSoup(current_page, 'html.parser') 
@@ -45,6 +46,14 @@ def get_hours(current_page, hours_text="No hours scanned"):
         hours_text = _hours.find(class_="ng-binding").string
     
     return hours_text
+
+def get_progress(current_page, progress_text="No progress scanned"):
+    main_portal = BeautifulSoup(current_page, 'html.parser') 
+    progress_div = main_portal.find_all(class_="progress-bar")
+    for _progress in progress_div:
+        progress_text = _progress.find(class_="ng-binding").string
+    
+    return progress_text
    
 def view_profile(page):
     page.click("text=View Profile")
@@ -53,7 +62,7 @@ def view_profile(page):
 
 
 with sync_playwright() as p:
-    # head with delay, so we don't need to solve reCaptcha
+    # Apply slow_mo delay, so we don't need to solve reCaptcha
     browser = p.chromium.launch(headless=True, slow_mo=100)
     # Change this user_agent parameter based on your machine/envinroment
     context = browser.new_context(
