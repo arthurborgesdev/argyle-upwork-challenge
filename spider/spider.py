@@ -18,33 +18,30 @@ def username_login(page):
 def password_login(page):
     page.fill('#login_password', PASSWORD)
     page.click('#login_control_continue')
-    page.on("load", lambda response: print(response.url))
 
 def secret_login(page):
     page.fill('#login_answer', SECRET)
     page.click('#login_control_continue')
 
 def scan_main_page(page):
-    print(page)
+    # interact to trigger auto-wait
+    page.click("text=My Profile")
     current_page = page.content()
-    # print(get_visibility(current_page))
-    print(current_page)
-
-def view_profile(page):
-    page.click("text=View Profile")
-    page.pause()
-    current_page = page.content()
+    print(get_visibility(current_page))
     
-
 def get_visibility(current_page):
     main_portal = BeautifulSoup(current_page, 'html.parser') 
     visibility_div = main_portal.find_all("div", class_="fe-ui-profile-visibility-directive")
-    print(visibility_div)
     for _vis in visibility_div:
         visibility_text = _vis.find(class_="ng-binding").string
     
     return visibility_text
    
+def view_profile(page):
+    page.click("text=View Profile")
+    page.pause()
+    current_page = page.content()
+
 
 with sync_playwright() as p:
     # head with delay, so we don't need to solve reCaptcha
@@ -59,7 +56,7 @@ with sync_playwright() as p:
     password_login(page)
     # Add a verification to secret login here before
     # secret_login(page)
-    # scan_main_page(page)
+    scan_main_page(page)
     # view_profile(page)
     
     browser.close()
