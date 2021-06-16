@@ -23,14 +23,22 @@ def secret_login(page):
     page.fill('#login_answer', SECRET)
     page.click('#login_control_continue')
 
+def view_profile(page):
+    page.click("text=View Profile")
+    current_page = browser.page_source
+    my_profile = BeautifulSoup(page, 'html.parser') 
+    print(my_profile.h1.string)
+
 with sync_playwright() as p:
     # head with delay, so we don't need to solve reCaptcha
-    browser = p.chromium.launch(headless=False, slow_mo=100) 
+    browser = p.chromium.launch(headless=False, slow_mo=100)
     page = browser.new_page()
     
     username_login(page)
     password_login(page)
-    secret_login(page)
+    # Add a verification to secret login here before
+    # secret_login(page)
+    view_profile(page)
     
     print(page.title())
     browser.close()
