@@ -28,14 +28,26 @@ def scan_main_page(page):
     page.click("text=My Profile")
     current_page = page.content()
     print(get_visibility(current_page))
-    
+    print(get_hours(current_page))
+
 def get_visibility(current_page):
     main_portal = BeautifulSoup(current_page, 'html.parser') 
-    visibility_div = main_portal.find_all("div", class_="fe-ui-profile-visibility-directive")
+    visibility_div = main_portal.find_all("div", class_="fe-ui-profile-visibility")
     for _vis in visibility_div:
+        # print(_vis)
         visibility_text = _vis.find(class_="ng-binding").string
     
     return visibility_text
+
+def get_hours(current_page):
+    print("######################################")
+    main_portal = BeautifulSoup(current_page, 'html.parser') 
+    hours_div = main_portal.find_all("div", class_="fe-ui-availability ng-scope")
+    for _hours in hours_div:
+        # print(_hours)
+        hours_text = _hours.find(class_="ng-binding").string
+    
+    return hours_text
    
 def view_profile(page):
     page.click("text=View Profile")
