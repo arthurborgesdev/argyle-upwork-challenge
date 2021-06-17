@@ -113,13 +113,13 @@ class ProfilePage:
         (self.user.first_name, 
         self.user.last_name, 
         self.user.full_name) = self.get_name(profile_page)
-        self.user.profile_picture = self.get_picture_url(profile_page)
-        (self.user.line1, 
-         self.user.line2, 
-         self.user.city, 
-         self.user.state, 
-         self.user.postal_code,
-         self.user.country) = self.get_address(profile_page)
+        self.user.picture_url = self.get_picture_url(profile_page)
+        (self.user.address['line1'], 
+         self.user.address['line2'], 
+         self.user.address['city'], 
+         self.user.address['state'], 
+         self.user.address['postal_code'],
+         self.user.address['country']) = self.get_address(profile_page)
 
     def get_name(self, soup):
         name_text = ""
@@ -143,16 +143,17 @@ class ProfilePage:
 
     def get_address(self, soup):
         address_div = soup.find_all(class_="identity-content")[0]
-        address_city, address_country = "", ""
+        (line1, line2, address_city, 
+        state, postal_code, address_country) = "", "", "", "", "", ""
         try:
             address_city = address_div.select('span[itemprop="locality"]')[0].string.title()
             address_country = address_div.select('span[itemprop="country-name"]')[0].string.title()
         except AttributeError:
-            line1 = ""
-            line2 = ""
+            line1 = "No address line1 scanned"
+            line2 = "No address line2 scanned"
             address_city="No address scanned"
-            state = ""
-            postal_code = ""
+            state = "No state scanned"
+            postal_code = "No postal code scanned"
             address_country="No country scanned"
         return line1, line2, address_city, state, postal_code, address_country
 
@@ -176,5 +177,5 @@ with sync_playwright() as p:
     profile.scan_profile_page(page)
     # profile = ProfilePage()
     # profile.view_profile(page)
-
+    print(user.dict())
     browser.close()
