@@ -1,7 +1,7 @@
 from dotenv import dotenv_values
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 login_credentials = dotenv_values(".env")
 
@@ -15,22 +15,22 @@ USER_AGENT = ("Mozilla/5.0 (X11; Linux x86_64)"
               )
 
 class Address(BaseModel):
-    line1: str = "No address line1 scanned"
-    line2: str = "No address line2 scanned"
-    city: str = "No city scanned"
-    state: str = "No state scanned"
-    postal_code: str = "No postal code scanned"
-    country: str = "No country scanned"
+    line1: str = ''
+    line2: str = ''
+    city: str = ''
+    state: str = ''
+    postal_code: str = ''
+    country: str = ''
 
 
 class User(BaseModel):
-    visibility = "No visibility scanned"
-    work_hours = "No work hours scanned"
-    progress = "No progress scanned"
-    first_name = "No first name scanned"
-    last_name = "No last name scanned"
-    full_name = "No full name scanned"
-    picture_url = "No picture scanned"
+    visibility = ''
+    work_hours = ''
+    progress =  ''
+    first_name = ''
+    last_name = ''
+    full_name = ''
+    picture_url = ''
     address: Address = {}
 
 class LoginHandling:
@@ -67,22 +67,20 @@ class MainPage:
                                         class_="fe-ui-profile-visibility"
                                         )
         for _vis in visibility_div:
-            visibility_text = ""
+            visibility_text = "No visibility scanned"
             try:
                 visibility_text = _vis.find(class_="ng-binding").string
             except AttributeError:
-                visibility_text = "No visibility scanned"
                 continue  
         return visibility_text
 
     def get_hours(self, soup):
         hours_div = soup.select("div.fe-ui-availability.ng-scope")
         for _hours in hours_div:
-            hours_text = ""
+            hours_text = "No work hours scanned"
             try:
                 hours_text = _hours.find(class_="ng-binding").string
-            except AttributeError:
-                hours_text = "No work hours scanned" 
+            except AttributeError:         
                 continue
         return hours_text
 
@@ -90,11 +88,10 @@ class MainPage:
         progress_div = soup.find_all(class_="progress-bar")
         # print(progress_div) # Random bug of displaying lots and lots of progress classes together
         for _progress in progress_div:
-            progress_text = ""
+            progress_text="No progress scanned"
             try:
                 progress_text = _progress.find(class_="ng-binding").string
             except AttributeError:
-                progress_text="No progress scanned"   
                 continue
         return progress_text
 
@@ -126,7 +123,10 @@ class ProfilePage:
         try:
             name_text = soup.find_all(class_="identity-content")[0].h1.string.strip()
         except AttributeError:
-            name_text="No name scanned"
+            first_name = "No first name scanned"
+            last_name = "No last name scanned"
+            full_name = "No full name scanned" 
+            return first_name, last_name, full_name
         first_name = name_text.split()[0]
         last_name = name_text.split()[1]
         full_name = name_text
@@ -134,27 +134,26 @@ class ProfilePage:
 
     def get_picture_url(self, soup):
         picture_div = soup.find_all(class_="cfe-ui-profile-identity")[0]
-        picture_url = ""
+        picture_url = "No picture scanned"
         try:
             picture_url = picture_div.find(class_="up-avatar")['src']
         except AttributeError:
-            picture_url="No picture scanned"
+            pass
         return picture_url
 
     def get_address(self, soup):
         address_div = soup.find_all(class_="identity-content")[0]
-        (line1, line2, address_city, 
-        state, postal_code, address_country) = "", "", "", "", "", ""
+        line1 = "No address line1 scanned"
+        line2 = "No address line2 scanned"
+        address_city="No address scanned"
+        state = "No state scanned"
+        postal_code = "No postal code scanned"
+        address_country="No country scanned"
         try:
             address_city = address_div.select('span[itemprop="locality"]')[0].string.title()
             address_country = address_div.select('span[itemprop="country-name"]')[0].string.title()
         except AttributeError:
-            line1 = "No address line1 scanned"
-            line2 = "No address line2 scanned"
-            address_city="No address scanned"
-            state = "No state scanned"
-            postal_code = "No postal code scanned"
-            address_country="No country scanned"
+            pass
         return line1, line2, address_city, state, postal_code, address_country
 
 with sync_playwright() as p:
@@ -175,7 +174,6 @@ with sync_playwright() as p:
     main.scan_main_page(page)
     profile = ProfilePage(user)
     profile.scan_profile_page(page)
-    # profile = ProfilePage()
-    # profile.view_profile(page)
+
     print(user.dict())
     browser.close()
