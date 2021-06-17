@@ -1,7 +1,8 @@
 from dotenv import dotenv_values
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
+import json
 
 login_credentials = dotenv_values(".env")
 
@@ -174,6 +175,8 @@ with sync_playwright() as p:
     main.scan_main_page(page)
     profile = ProfilePage(user)
     profile.scan_profile_page(page)
+    
+    with open('scan_data.json', 'w') as outfile:
+        json.dump(user.dict(), outfile)
 
-    print(user.dict())
     browser.close()
