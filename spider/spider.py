@@ -73,11 +73,19 @@ class ProfilePage:
         current_page = page.content()
         profile_page = BeautifulSoup(current_page, 'html.parser')
         print(self.get_name(profile_page))
+        print(self.get_picture_url(profile_page))
 
     def get_name(self, soup, name_text="No name scanned"):
         name_text = soup.find_all(class_="identity-content")[0].h1.string.strip()
-        return name_text
+        first_name = name_text.split()[0]
+        last_name = name_text.split()[1]
+        full_name = name_text
+        return first_name, last_name, full_name
 
+    def get_picture_url(self, soup, picture_url="No picture scanned"):
+        picture_div = soup.find_all(class_="cfe-ui-profile-identity")[0]
+        picture_url = picture_div.find(class_="up-avatar")['src']
+        return picture_url
 
 with sync_playwright() as p:
     # Apply slow_mo delay, so we don't need to solve reCaptcha
