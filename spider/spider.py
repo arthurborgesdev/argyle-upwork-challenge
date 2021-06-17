@@ -46,8 +46,25 @@ class LoginHandling:
         page.click('#login_control_continue')
 
     def secret_login(self, page):
-        page.fill('#login_answer', SECRET)
-        page.click('#login_control_continue')
+        # Add a check to a screen that appears on new devices
+        # current_page = page.content()
+        # answer_page = BeautifulSoup(current_page, 'html.parser')
+        # print(answer_page)
+        # is_in_answer_page = answer_page.find_all("button", class_="auth-submit-button")
+        # print(is_in_answer_page)
+        # if is_in_answer_page:
+        # secret_answer_element = page.wait_for_selector("text=Let's make sure it's you", 'visible', 2)
+        # print(secret_answer_element)
+        # if secret_answer_element:
+        #     pass
+        # else:
+        try: 
+            page.wait_for_selector("text=Let's make sure it's you")
+            page.fill('#login_answer', SECRET)
+            page.click('#login_control_continue')
+        except:
+            pass
+
 
 
 class MainPage:
@@ -168,8 +185,8 @@ with sync_playwright() as p:
     login = LoginHandling()
     login.username_login(page)
     login.password_login(page)
-    # Add a verification to secret login here before
-    # secret_login(page)
+    login.secret_login(page)
+
     user = User()
     main = MainPage(user)
     main.scan_main_page(page)
