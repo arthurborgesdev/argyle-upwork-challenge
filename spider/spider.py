@@ -36,10 +36,10 @@ class MainPage:
         # interact to trigger auto-wait
         page.click("text=My Profile")
         current_page = page.content()
-        main_portal = BeautifulSoup(current_page, 'html.parser')
-        print(self.get_visibility(main_portal))
-        print(self.get_hours(main_portal))
-        print(self.get_progress(main_portal))
+        main_page = BeautifulSoup(current_page, 'html.parser')
+        print(self.get_visibility(main_page))
+        print(self.get_hours(main_page))
+        print(self.get_progress(main_page))
 
     def get_visibility(self, soup, visibility_text="No visibility scanned"):
         visibility_div = soup.find_all("div",
@@ -64,16 +64,21 @@ class MainPage:
 
 class ProfilePage:
 
-    def view_profile(self, page):
+    def scan_profile_page(self, page):
+        # First click to access the page
+        page.click("text=View Profile")
+        # Second click to trigger auto-wait until page finishes rendering
         page.click("text=View Profile")
         current_page = page.content()
-        print(self.get_name(current_page))
+        profile_page = BeautifulSoup(current_page, 'html.parser')
+        print(profile_page)
+        print(self.get_name(profile_page))
 
-    def get_name(current_page, name_text="No name scanned"):
-        main_portal = BeautifulSoup(current_page, 'html.parser')
-        name_div = main_portal.find_all(class_="progress-bar")
-        for _name in name_div:
-            name_text = _name.find(class_="ng-binding").string
+    def get_name(self, soup, name_text="No name scanned"):
+        print(soup)
+        name_div = soup.find_all(class_="identity-content")
+        print(name_div)
+        name_text = name_div.h1.string
         return name_text
 
 
@@ -93,6 +98,8 @@ with sync_playwright() as p:
 
     main = MainPage()
     main.scan_main_page(page)
+    profile = ProfilePage()
+    profile.scan_profile_page(page)
     # profile = ProfilePage()
     # profile.view_profile(page)
 
