@@ -86,6 +86,7 @@ class ProfilePage:
         profile_page = BeautifulSoup(current_page, 'html.parser')
         print(self.get_name(profile_page))
         print(self.get_picture_url(profile_page))
+        print(self.get_address(profile_page))
 
     def get_name(self, soup):
         try:
@@ -108,10 +109,12 @@ class ProfilePage:
     def get_address(self, soup):
         address_div = soup.find_all(class_="identity-content")[0]
         try:
-            address_city = address_div.select('span[itemprop="locality"]')
+            address_city = address_div.select('span[itemprop="locality"]')[0].string.title()
+            address_country = address_div.select('span[itemprop="country-name"]')[0].string.title()
         except AttributeError:
-            address_div="No address scanned"
-        print(address_div)
+            address_city="No address scanned"
+            address_country="No country scanned"
+        return address_city, address_country
 
 with sync_playwright() as p:
     # Apply slow_mo delay, so we don't need to solve reCaptcha
