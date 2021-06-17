@@ -57,6 +57,7 @@ class MainPage:
 
     def get_progress(self, soup, progress_text="No progress scanned"):
         progress_div = soup.find_all(class_="progress-bar")
+        # print(progress_div) # Random bug of displaying lots and lots of progress classes together
         for _progress in progress_div:
             progress_text = _progress.find(class_="ng-binding").string
         return progress_text
@@ -71,14 +72,10 @@ class ProfilePage:
         page.click("text=View Profile")
         current_page = page.content()
         profile_page = BeautifulSoup(current_page, 'html.parser')
-        print(profile_page)
         print(self.get_name(profile_page))
 
     def get_name(self, soup, name_text="No name scanned"):
-        print(soup)
-        name_div = soup.find_all(class_="identity-content")
-        print(name_div)
-        name_text = name_div.h1.string
+        name_text = soup.find_all(class_="identity-content")[0].h1.string.strip()
         return name_text
 
 
