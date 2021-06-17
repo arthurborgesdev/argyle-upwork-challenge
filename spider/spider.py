@@ -36,29 +36,27 @@ class MainPage:
         # interact to trigger auto-wait
         page.click("text=My Profile")
         current_page = page.content()
-        print(self.get_visibility(current_page))
-        print(self.get_hours(current_page))
-        print(self.get_progress(current_page))
-
-    def get_visibility(current_page, visibility_text="No visibility scanned"):
         main_portal = BeautifulSoup(current_page, 'html.parser')
-        visibility_div = main_portal.find_all("div",
+        print(self.get_visibility(main_portal))
+        print(self.get_hours(main_portal))
+        print(self.get_progress(main_portal))
+
+    def get_visibility(self, soup, visibility_text="No visibility scanned"):
+        visibility_div = soup.find_all("div",
                                               class_="fe-ui-profile-visibility"
                                               )
         for _vis in visibility_div:
             visibility_text = _vis.find(class_="ng-binding").string
         return visibility_text
 
-    def get_hours(current_page, hours_text="No hours scanned"):
-        main_portal = BeautifulSoup(current_page, 'html.parser')
-        hours_div = main_portal.select("div.fe-ui-availability.ng-scope")
+    def get_hours(self, soup, hours_text="No hours scanned"):
+        hours_div = soup.select("div.fe-ui-availability.ng-scope")
         for _hours in hours_div:
             hours_text = _hours.find(class_="ng-binding").string
         return hours_text
 
-    def get_progress(current_page, progress_text="No progress scanned"):
-        main_portal = BeautifulSoup(current_page, 'html.parser')
-        progress_div = main_portal.find_all(class_="progress-bar")
+    def get_progress(self, soup, progress_text="No progress scanned"):
+        progress_div = soup.find_all(class_="progress-bar")
         for _progress in progress_div:
             progress_text = _progress.find(class_="ng-binding").string
         return progress_text
@@ -93,6 +91,8 @@ with sync_playwright() as p:
     # Add a verification to secret login here before
     # secret_login(page)
 
+    main = MainPage()
+    main.scan_main_page(page)
     # profile = ProfilePage()
     # profile.view_profile(page)
 
