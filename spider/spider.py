@@ -41,25 +41,37 @@ class MainPage:
         print(self.get_hours(main_page))
         print(self.get_progress(main_page))
 
-    def get_visibility(self, soup, visibility_text="No visibility scanned"):
+    def get_visibility(self, soup):
         visibility_div = soup.find_all("div",
                                               class_="fe-ui-profile-visibility"
                                               )
         for _vis in visibility_div:
-            visibility_text = _vis.find(class_="ng-binding").string
+            try:
+                visibility_text = _vis.find(class_="ng-binding").string
+            except AttributeError:
+                visibility_text="No visibility scanned"
+                continue  
         return visibility_text
 
-    def get_hours(self, soup, hours_text="No hours scanned"):
+    def get_hours(self, soup):
         hours_div = soup.select("div.fe-ui-availability.ng-scope")
         for _hours in hours_div:
-            hours_text = _hours.find(class_="ng-binding").string
+            try:
+                hours_text = _hours.find(class_="ng-binding").string
+            except AttributeError:
+                hours_text="No hours scanned" 
+                continue
         return hours_text
 
-    def get_progress(self, soup, progress_text="No progress scanned"):
+    def get_progress(self, soup):
         progress_div = soup.find_all(class_="progress-bar")
         # print(progress_div) # Random bug of displaying lots and lots of progress classes together
         for _progress in progress_div:
-            progress_text = _progress.find(class_="ng-binding").string
+            try:
+                progress_text = _progress.find(class_="ng-binding").string
+            except AttributeError:
+                progress_text="No progress scanned"   
+                continue
         return progress_text
 
 
@@ -75,17 +87,31 @@ class ProfilePage:
         print(self.get_name(profile_page))
         print(self.get_picture_url(profile_page))
 
-    def get_name(self, soup, name_text="No name scanned"):
-        name_text = soup.find_all(class_="identity-content")[0].h1.string.strip()
+    def get_name(self, soup):
+        try:
+            name_text = soup.find_all(class_="identity-content")[0].h1.string.strip()
+        except AttributeError:
+            name_text="No name scanned"
         first_name = name_text.split()[0]
         last_name = name_text.split()[1]
         full_name = name_text
         return first_name, last_name, full_name
 
-    def get_picture_url(self, soup, picture_url="No picture scanned"):
+    def get_picture_url(self, soup):
         picture_div = soup.find_all(class_="cfe-ui-profile-identity")[0]
-        picture_url = picture_div.find(class_="up-avatar")['src']
+        try:
+            picture_url = picture_div.find(class_="up-avatar")['src']
+        except AttributeError:
+            picture_url="No picture scanned"
         return picture_url
+
+    def get_address(self, soup):
+        address_div = soup.find_all(class_="identity-content")[0]
+        try:
+            address_city = address_div.select('span[itemprop="locality"]')
+        except AttributeError:
+            address_div="No address scanned"
+        print(address_div)
 
 with sync_playwright() as p:
     # Apply slow_mo delay, so we don't need to solve reCaptcha
