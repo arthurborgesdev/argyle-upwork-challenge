@@ -1,1 +1,17 @@
-{"address": {"line1": "No address line1 scanned", "line2": "No address line2 scanned", "city": "Buenos Aires", "state": "No state scanned", "postal_code": "No postal code scanned", "country": "Argentina"}, "visibility": "Public", "work_hours": "More than 30 hrs/week", "progress": "90%", "first_name": "Bob", "last_name": "S.", "full_name": "Bob S.", "picture_url": "https://www.upwork.com/profile-portraits/c1s5uKXKHAkmbAMlvDYlBVERPiRcVTlQN0Kck3OSeNjB6W69xAqG2pPHirqicJzqx-"}
+{
+  "address": {
+    "line1": "No address line1 scanned",
+    "line2": "No address line2 scanned",
+    "city": "Buenos Aires",
+    "state": "No state scanned",
+    "postal_code": "No postal code scanned",
+    "country": "Argentina"
+  },
+  "visibility": "Public",
+  "work_hours": "More than 30 hrs/week",
+  "progress": "90%",
+  "first_name": "Bob",
+  "last_name": "S.",
+  "full_name": "Bob S.",
+  "picture_url": "https://www.upwork.com/profile-portraits/c1s5uKXKHAkmbAMlvDYlBVERPiRcVTlQN0Kck3OSeNjB6W69xAqG2pPHirqicJzqx-"
+}

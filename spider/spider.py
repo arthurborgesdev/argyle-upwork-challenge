@@ -46,18 +46,6 @@ class LoginHandling:
         page.click('#login_control_continue')
 
     def secret_login(self, page):
-        # Add a check to a screen that appears on new devices
-        # current_page = page.content()
-        # answer_page = BeautifulSoup(current_page, 'html.parser')
-        # print(answer_page)
-        # is_in_answer_page = answer_page.find_all("button", class_="auth-submit-button")
-        # print(is_in_answer_page)
-        # if is_in_answer_page:
-        # secret_answer_element = page.wait_for_selector("text=Let's make sure it's you", 'visible', 2)
-        # print(secret_answer_element)
-        # if secret_answer_element:
-        #     pass
-        # else:
         try: 
             page.wait_for_selector("text=Let's make sure it's you")
             page.fill('#login_answer', SECRET)
