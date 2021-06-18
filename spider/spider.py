@@ -54,7 +54,7 @@ class LoginHandling:
 
     def secret_login(self, page: Page) -> None:
         try:
-            page.wait_for_selector("text=Let's make sure it's you", timeout=3.0)
+            page.wait_for_selector("text=Let's make sure it's you", timeout=5)
             page.fill('#login_answer', secret)
             page.click('#login_control_continue')
         except playwright._impl._api_types.TimeoutError:
