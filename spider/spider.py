@@ -1,54 +1,60 @@
 from dotenv import dotenv_values
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup # type: ignore
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from typing import Tuple, Optional
 import json
+
+# For type annotations
+from playwright.sync_api import Page
+
 
 login_credentials = dotenv_values(".env")
 
-PORTAL_LINK = login_credentials["PORTAL_LINK"]
-USERNAME = login_credentials["USERNAME"]
-PASSWORD = login_credentials["PASSWORD"]
-SECRET = login_credentials["SECRET"]
-USER_AGENT = ("Mozilla/5.0 (X11; Linux x86_64)"
+portal_link = login_credentials["PORTAL_LINK"]
+username = login_credentials["USERNAME"]
+password = login_credentials["PASSWORD"]
+secret = login_credentials["SECRET"]
+user_agent = ("Mozilla/5.0 (X11; Linux x86_64)"
               "AppleWebKit/537.36 (KHTML, like Gecko)"
               "Chrome/90.0.4430.93 Safari/537.36"
               )
 
-class Address(BaseModel):
-    line1: str = ''
-    line2: str = ''
-    city: str = ''
-    state: str = ''
-    postal_code: str = ''
-    country: str = ''
+class Address(str):
+    line1 = ''
+    line2 = ''
+    city = ''
+    state = ''
+    postal_code = ''
+    country = ''
 
 
 class User(BaseModel):
-    visibility = ''
-    work_hours = ''
-    progress =  ''
-    first_name = ''
-    last_name = ''
-    full_name = ''
-    picture_url = ''
+    visibility: str = ''
+    work_hours: str = ''
+    progress: str =  ''
+    first_name: str = ''
+    last_name: str = ''
+    full_name: str = ''
+    picture_url:str = ''
     address: Address = {}
+
 
 class LoginHandling:
 
-    def username_login(self, page):
-        page.goto(PORTAL_LINK)
-        page.fill('#login_username', USERNAME)
+    def username_login(self, page: Page) -> None:
+        page.goto(portal_link)
+        page.fill('#login_username', username)
         page.click('#login_password_continue')
 
-    def password_login(self, page):
-        page.fill('#login_password', PASSWORD)
+    def password_login(self, page: Page) -> None:
+        page.fill('#login_password', password)
         page.click('#login_control_continue')
 
-    def secret_login(self, page):
+    def secret_login(self, page: Page) -> None:
         try: 
             page.wait_for_selector("text=Let's make sure it's you")
-            page.fill('#login_answer', SECRET)
+            page.fill('#login_answer', secret)
             page.click('#login_control_continue')
         except:
             pass
@@ -56,10 +62,10 @@ class LoginHandling:
 
 
 class MainPage:
-    def __init__(self, arg):
+    def __init__(self, user: User) -> None:
         self.user = user
 
-    def scan_main_page(self, page):
+    def scan_main_page(self, page: Page) -> None:
         # interact to trigger auto-wait
         page.click("text=My Profile")
         current_page = page.content()
@@ -68,7 +74,7 @@ class MainPage:
         self.user.work_hours = self.get_hours(main_page)
         self.user.progress = self.get_progress(main_page)
 
-    def get_visibility(self, soup):
+    def get_visibility(self, soup: BeautifulSoup) -> str:
         visibility_div = soup.find_all("div",
                                         class_="fe-ui-profile-visibility"
                                         )
@@ -80,7 +86,7 @@ class MainPage:
                 continue  
         return visibility_text
 
-    def get_hours(self, soup):
+    def get_hours(self, soup: BeautifulSoup) -> str:
         hours_div = soup.select("div.fe-ui-availability.ng-scope")
         for _hours in hours_div:
             hours_text = "No work hours scanned"
@@ -90,7 +96,7 @@ class MainPage:
                 continue
         return hours_text
 
-    def get_progress(self, soup):
+    def get_progress(self, soup: BeautifulSoup) -> str:
         progress_div = soup.find_all(class_="progress-bar")
         # print(progress_div) # Random bug of displaying lots and lots of progress classes together
         for _progress in progress_div:
@@ -103,10 +109,10 @@ class MainPage:
 
 
 class ProfilePage:
-    def __init__(self, arg):
+    def __init__(self, user: User) -> None:
         self.user = user
 
-    def scan_profile_page(self, page):
+    def scan_profile_page(self, page: Page) -> None:
         # First click to access the page
         page.click("text=View Profile")
         # Second click to trigger auto-wait until page finishes rendering
@@ -124,7 +130,7 @@ class ProfilePage:
          self.user.address['postal_code'],
          self.user.address['country']) = self.get_address(profile_page)
 
-    def get_name(self, soup):
+    def get_name(self, soup: BeautifulSoup) -> Tuple[str, str, str]:
         name_text = ""
         try:
             name_text = soup.find_all(class_="identity-content")[0].h1.string.strip()
@@ -138,7 +144,7 @@ class ProfilePage:
         full_name = name_text
         return first_name, last_name, full_name
 
-    def get_picture_url(self, soup):
+    def get_picture_url(self, soup: BeautifulSoup) -> str:
         picture_div = soup.find_all(class_="cfe-ui-profile-identity")[0]
         picture_url = "No picture scanned"
         try:
@@ -147,7 +153,7 @@ class ProfilePage:
             pass
         return picture_url
 
-    def get_address(self, soup):
+    def get_address(self, soup: BeautifulSoup) -> Tuple[str, str, str, str, str, str]:
         address_div = soup.find_all(class_="identity-content")[0]
         line1 = "No address line1 scanned"
         line2 = "No address line2 scanned"
@@ -167,7 +173,7 @@ with sync_playwright() as p:
     browser = p.chromium.launch(headless=True, slow_mo=100)
     # Change this user_agent parameter based on your machine/envinroment
     context = browser.new_context(
-        user_agent=USER_AGENT
+        user_agent=user_agent
     )
     page = context.new_page()
     login = LoginHandling()

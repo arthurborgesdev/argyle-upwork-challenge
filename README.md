@@ -17,6 +17,8 @@ Other objectives involve extracting more data and handling erros, making project
 - BeautifulSoup4
 - Pytest
 - Playwright
+- Flake8
+- Mypy
 
 
 To get a local copy up and running follow these simple example steps.
@@ -55,6 +57,12 @@ TBD
 
 ### Run tests
 TBD
+
+### Run linters/type checkers
+
+- Run `poetry run flake8`
+- Run `poetry run mypy ./spider/spider.py`
+
 ### Deployment
 TBD
 
