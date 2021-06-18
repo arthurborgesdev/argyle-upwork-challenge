@@ -1,8 +1,8 @@
 from dotenv import dotenv_values
 from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup # type: ignore
-from pydantic import BaseModel, Field
-from typing import Tuple, Optional
+from pydantic import BaseModel
+from typing import Any, Tuple, Dict
 import json
 
 # For type annotations
@@ -20,13 +20,13 @@ user_agent = ("Mozilla/5.0 (X11; Linux x86_64)"
               "Chrome/90.0.4430.93 Safari/537.36"
               )
 
-class Address(str):
-    line1 = ''
-    line2 = ''
-    city = ''
-    state = ''
-    postal_code = ''
-    country = ''
+class Address(Dict[str, Any]):
+    line1: str = ''
+    line2: str = ''
+    city: str = ''
+    state: str = ''
+    postal_code: str = ''
+    country: str = ''
 
 
 class User(BaseModel):
