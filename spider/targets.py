@@ -5,6 +5,7 @@ from typing import Any, Tuple, Dict
 # For type annotations
 from playwright.sync_api import Page
 
+
 class Address(Dict[str, Any]):
     line1: str = ''
     line2: str = ''

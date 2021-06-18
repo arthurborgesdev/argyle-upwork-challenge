@@ -5,22 +5,28 @@ import json
 from login import LoginHandling
 from targets import User, MainPage, ProfilePage
 
+# For type annotations
+from playwright.sync_api import Page
+
 user_agent = ("Mozilla/5.0 (X11; Linux x86_64)"
               "AppleWebKit/537.36 (KHTML, like Gecko)"
               "Chrome/90.0.4430.93 Safari/537.36"
               )
 
-def login_routine(page):
+
+def login_routine(page: Page) -> None:
     login = LoginHandling()
     login.username_login(page)
     login.password_login(page)
     login.secret_login(page)
 
-def scan_routine(user, page):
+
+def scan_routine(user: User, page: Page) -> None:
     main = MainPage(user)
     main.scan_main_page(page)
     profile = ProfilePage(user)
     profile.scan_profile_page(page)
+
 
 with sync_playwright() as p:
     # Apply slow_mo delay, so we don't need to solve reCaptcha
