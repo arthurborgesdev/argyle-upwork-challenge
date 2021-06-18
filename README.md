@@ -17,11 +17,13 @@ Other objectives involve extracting more data and handling erros, making project
 - BeautifulSoup4
 - Pytest
 - Playwright
+- Pydantic
 - Flake8
 - Mypy
+- lxml
 
 
-To get a local copy up and running follow these simple example steps.
+To get a local copy up and running follow these simple example steps:
 
 ### Prerequisites
 
@@ -43,11 +45,14 @@ To get a local copy up and running follow these simple example steps.
   Now you can run the scripts
 
 ### Setup
-TBD
+
+- Go to a Terminal and clone the repository: `git clone git@github.com:arthurborgesdev/argyle-upwork-challenge.git`
+- Make sure you are on the correct branch (`main`, by the time of the project submission, or `development` for the most stable recent one before project submission)
+
 ### Install
 
-- Install `pyenv` using homebrew or other mecanism using [these](https://github.com/pyenv/pyenv) instructions.
-- Install `poetry`.
+- Install `pyenv` using homebrew or other mecanism using [these](https://github.com/pyenv/pyenv) instructions
+- Install `poetry`
 - Run `poetry install` to install packages/libraries
 
 
@@ -66,6 +71,17 @@ TBD
 ### Deployment
 TBD
 
+### Performance improvements
+
+- Need to change complete scanner architecture now? 
+
+  - To puppeteer? No:
+    https://blog.checklyhq.com/puppeteer-vs-selenium-vs-playwright-speed-comparison/
+
+  - To a custom solution from scratch?
+    Maybe (need more studies and a MVP from scratch using httpx, for example)
+
+- Other optimizations involved changing html-parser to lxml in BeautifulSoup which improved performance.
 
 ## Author
 
