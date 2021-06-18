@@ -1,5 +1,4 @@
-from dotenv import dotenv_values
-from playwright.sync_api import sync_playwright, playwright
+from playwright.sync_api import sync_playwright
 from bs4 import BeautifulSoup  # type: ignore
 from pydantic import BaseModel
 from typing import Any, Tuple, Dict
@@ -8,13 +7,9 @@ import json
 # For type annotations
 from playwright.sync_api import Page
 
+# other support files
+from login import LoginHandling
 
-login_credentials = dotenv_values(".env")
-
-portal_link = login_credentials["PORTAL_LINK"]
-username = login_credentials["USERNAME"]
-password = login_credentials["PASSWORD"]
-secret = login_credentials["SECRET"]
 user_agent = ("Mozilla/5.0 (X11; Linux x86_64)"
               "AppleWebKit/537.36 (KHTML, like Gecko)"
               "Chrome/90.0.4430.93 Safari/537.36"
@@ -39,26 +34,6 @@ class User(BaseModel):
     full_name: str = ''
     picture_url: str = ''
     address: Address = {}
-
-
-class LoginHandling:
-
-    def username_login(self, page: Page) -> None:
-        page.goto(portal_link)
-        page.fill('#login_username', username)
-        page.click('#login_password_continue')
-
-    def password_login(self, page: Page) -> None:
-        page.fill('#login_password', password)
-        page.click('#login_control_continue')
-
-    def secret_login(self, page: Page) -> None:
-        try:
-            page.wait_for_selector("text=Let's make sure it's you", timeout=5)
-            page.fill('#login_answer', secret)
-            page.click('#login_control_continue')
-        except playwright._impl._api_types.TimeoutError:
-            pass
 
 
 class MainPage:
