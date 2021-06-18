@@ -69,7 +69,7 @@ class MainPage:
         # interact to trigger auto-wait
         page.click("text=My Profile")
         current_page = page.content()
-        main_page = BeautifulSoup(current_page, 'html.parser')
+        main_page = BeautifulSoup(current_page, 'lxml')
         self.user.visibility = self.get_visibility(main_page)
         self.user.work_hours = self.get_hours(main_page)
         self.user.progress = self.get_progress(main_page)
@@ -119,7 +119,7 @@ class ProfilePage:
         # Second click to trigger auto-wait until page finishes rendering
         page.click("text=View Profile")
         current_page = page.content()
-        profile_page = BeautifulSoup(current_page, 'html.parser')
+        profile_page = BeautifulSoup(current_page, 'lxml')
         (self.user.first_name,
          self.user.last_name,
          self.user.full_name) = self.get_name(profile_page)
