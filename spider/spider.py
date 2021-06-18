@@ -1,6 +1,6 @@
 from dotenv import dotenv_values
 from playwright.sync_api import sync_playwright
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup # type: ignore
 from pydantic import BaseModel
 import json
 
