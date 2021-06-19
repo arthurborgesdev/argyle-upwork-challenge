@@ -1,4 +1,4 @@
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright, playwright
 import json
 
 # other support files
@@ -28,20 +28,29 @@ def scan_routine(user: User, page: Page) -> None:
     profile.scan_profile_page(page)
 
 
-with sync_playwright() as p:
-    # Apply slow_mo delay, so we don't need to solve reCaptcha
-    browser = p.chromium.launch(headless=True, slow_mo=100)
-    # Change this user_agent parameter based on your machine/envinroment
-    context = browser.new_context(
-        user_agent=user_agent
-    )
-    page = context.new_page()
+def initiate_scan():
+    with sync_playwright() as p:
+        # Apply slow_mo delay, so we don't need to solve reCaptcha
+        browser = p.chromium.launch(headless=True, slow_mo=100)
+        # Change this user_agent parameter based on your machine/envinroment
+        context = browser.new_context(
+            user_agent=user_agent
+        )
+        page = context.new_page()
 
-    login_routine(page)
-    user = User()
-    scan_routine(user, page)
+        login_routine(page)
+        user = User()
+        scan_routine(user, page)
 
-    with open('scan_data.json', 'w') as outfile:
-        json.dump(user.dict(), outfile)
+        with open('scan_data.json', 'w') as outfile:
+            json.dump(user.dict(), outfile)
 
-    browser.close()
+        browser.close()
+
+
+if __name__ == "__main__":
+    try:
+        initiate_scan()
+    except (playwright._impl._api_types.TimeoutError, AttributeError,
+            UnboundLocalError):
+        initiate_scan()
