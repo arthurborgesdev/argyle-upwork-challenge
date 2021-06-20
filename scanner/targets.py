@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup  # type: ignore
 from pydantic import BaseModel
 from typing import Any, Tuple, Dict
+import datetime
 
 # For type annotations
 from playwright.sync_api import Page
@@ -19,6 +20,8 @@ class User(BaseModel):
     visibility: str = ''
     work_hours: str = ''
     progress: str = ''
+    created_at: str = ''
+    updated_at: str = ''
     first_name: str = ''
     last_name: str = ''
     full_name: str = ''
@@ -88,6 +91,8 @@ class ProfilePage:
         (self.user.first_name,
          self.user.last_name,
          self.user.full_name) = self.get_name(profile_page)
+        self.user.created_at = datetime.datetime.utcnow().isoformat() + "Z"
+        self.user.updated_at = datetime.datetime.utcnow().isoformat() + "Z"
         self.user.picture_url = self.get_picture_url(profile_page)
         (self.user.address['line1'],
          self.user.address['line2'],
