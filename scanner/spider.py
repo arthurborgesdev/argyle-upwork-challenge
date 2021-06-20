@@ -2,8 +2,8 @@ from playwright.sync_api import sync_playwright, playwright
 import json
 
 # other support files
-from login import LoginHandling
-from targets import User, MainPage, ProfilePage
+from scanner.login import LoginHandling
+from scanner.targets import User, MainPage, ProfilePage
 
 # For type annotations
 from playwright.sync_api import Page
@@ -39,6 +39,7 @@ def initiate_scan():
         page = context.new_page()
 
         login_routine(page)
+
         user = User()
         scan_routine(user, page)
 

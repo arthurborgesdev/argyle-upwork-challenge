@@ -58,7 +58,7 @@ To get a local copy up and running follow these simple example steps:
 
 ### Usage
 
-- Run `poetry run python ./spider/spider.py`
+- Run `poetry run python ./scanner/spider.py`
 
 ### Run tests
 
@@ -74,7 +74,7 @@ Run tests with the command:
 ### Run linters/type checkers
 
 - Run `poetry run flake8`
-- Run `poetry run mypy ./spider/spider.py`
+- Run `poetry run mypy ./scanner/spider.py`
 
 ### Deployment
 TBD
