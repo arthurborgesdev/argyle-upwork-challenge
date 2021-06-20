@@ -132,21 +132,21 @@ class ProfilePage:
     def get_job_title(self, soup: BeautifulSoup) -> str:
         job_title_text = "No job title scanned"
         try:
-            job_title_text = soup.find_all(class_="white-space-nowrap")\
-                [0].parent.contents[0].string.strip()
-        except AttributeError as a:
+            job_title_text = soup.find_all(class_="white-space-nowrap")[0].\
+                parent.contents[0].string.strip()
+        except AttributeError:
             pass
         return job_title_text
 
     def get_payment_rate(self, soup: BeautifulSoup) -> str:
         payment_rate_text = "No hourly rate scanned"
-        try: 
+        try:
             payment = soup.\
                 select('button[aria-label="Edit hourly rate"]')[0].parent
             payment_amount = payment.span.string
             payment_rate = payment.contents[1].string.strip()
             payment_rate_text = payment_amount + payment_rate
-        except AttributeError as a:
+        except AttributeError:
             pass
         return payment_rate_text
 

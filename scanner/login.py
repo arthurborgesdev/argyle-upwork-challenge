@@ -1,6 +1,6 @@
 from dotenv import dotenv_values
 from playwright.sync_api import Page
-from playwright.sync_api import playwright
+import playwright
 
 login_credentials = dotenv_values(".env")
 

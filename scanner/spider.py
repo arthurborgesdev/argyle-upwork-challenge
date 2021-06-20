@@ -1,4 +1,5 @@
-from playwright.sync_api import sync_playwright, playwright
+from playwright.sync_api import sync_playwright
+import playwright
 import json
 
 # other support files
@@ -28,7 +29,7 @@ def scan_routine(user: User, page: Page) -> None:
     profile.scan_profile_page(page)
 
 
-def initiate_scan():
+def initiate_scan() -> None:
     with sync_playwright() as p:
         # Apply slow_mo delay, so we don't need to solve reCaptcha
         browser = p.chromium.launch(headless=True, slow_mo=100)

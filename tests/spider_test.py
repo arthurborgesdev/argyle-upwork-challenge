@@ -10,16 +10,17 @@ def test_title(browser):
     context = browser.new_context(
                   user_agent=user_agent
               )
-  
+
     page = context.new_page()
     page.goto('https://www.upwork.com/ab/account-security/login')
     assert page.title() == 'Log In - Upwork'
+
 
 def test_login(browser):
     context = browser.new_context(
                   user_agent=user_agent
               )
-  
+
     page = context.new_page()
     login_routine(page)
     assert page.title() == 'My Job Feed'
