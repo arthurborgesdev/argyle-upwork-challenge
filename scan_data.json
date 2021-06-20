@@ -1,9 +1,9 @@
 {
-  "visibility": "Public",
-  "work_hours": "More than 30 hrs/week",
-  "progress": "90%",
-  "created_at": "2021-06-20T04:02:32.418743Z",
-  "updated_at": "2021-06-20T04:02:32.418759Z",
+  "visibility": "No visibility scanned",
+  "work_hours": "No work hours scanned",
+  "progress": "No progress scanned",
+  "created_at": "2021-06-20T04:18:28.163606Z",
+  "updated_at": "2021-06-20T04:18:28.163630Z",
   "first_name": "Bob",
   "last_name": "S.",
   "full_name": "Bob S.",
@@ -16,5 +16,6 @@
     "postal_code": "No postal code scanned",
     "country": "Argentina"
   },
-  "job_title": "Best DB administrator in the world"
+  "job_title": "Best DB administrator in the world",
+  "payment_rate": "$500.00/hr"
 }

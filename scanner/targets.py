@@ -28,6 +28,7 @@ class User(BaseModel):
     picture_url: str = ''
     address: Address = {}
     job_title: str = ''
+    payment_rate: str = ''
 
 
 class MainPage:
@@ -96,6 +97,7 @@ class ProfilePage:
         self.user.updated_at = datetime.datetime.utcnow().isoformat() + "Z"
         self.user.picture_url = self.get_picture_url(profile_page)
         self.user.job_title = self.get_job_title(profile_page)
+        self.user.payment_rate = self.get_payment_rate(profile_page)
         (self.user.address['line1'],
          self.user.address['line2'],
          self.user.address['city'],
@@ -135,6 +137,18 @@ class ProfilePage:
         except AttributeError as a:
             pass
         return job_title_text
+
+    def get_payment_rate(self, soup: BeautifulSoup) -> str:
+        payment_rate_text = "No hourly rate scanned"
+        try: 
+            payment = soup.\
+                select('button[aria-label="Edit hourly rate"]')[0].parent
+            payment_amount = payment.span.string
+            payment_rate = payment.contents[1].string.strip()
+            payment_rate_text = payment_amount + payment_rate
+        except AttributeError as a:
+            pass
+        return payment_rate_text
 
     def get_address(self, soup: BeautifulSoup) \
             -> Tuple[str, str, str, str, str, str]:
