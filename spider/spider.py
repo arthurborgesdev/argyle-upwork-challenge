@@ -54,5 +54,6 @@ if __name__ == "__main__":
             initiate_scan()
             break
         except (playwright._impl._api_types.TimeoutError, AttributeError,
-                UnboundLocalError):
+                UnboundLocalError) as e:
+            print(e)
             print("An error occurred... restarting.")

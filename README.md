@@ -61,7 +61,15 @@ To get a local copy up and running follow these simple example steps:
 - Run `poetry run python ./spider/spider.py`
 
 ### Run tests
-TBD
+
+Add the following libraries as dev dependencies:
+
+- run `poetry add pytest --dev`
+- run `poetry add pytest-playwright --dev`
+
+Run tests with the command:
+
+- `poetry run pytest`
 
 ### Run linters/type checkers
 
