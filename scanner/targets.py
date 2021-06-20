@@ -27,6 +27,7 @@ class User(BaseModel):
     full_name: str = ''
     picture_url: str = ''
     address: Address = {}
+    job_title: str = ''
 
 
 class MainPage:
@@ -56,8 +57,8 @@ class MainPage:
 
     def get_hours(self, soup: BeautifulSoup) -> str:
         hours_div = soup.select("div.fe-ui-availability.ng-scope")
+        hours_text = "No work hours scanned"
         for _hours in hours_div:
-            hours_text = "No work hours scanned"
             try:
                 hours_text = _hours.find(class_="ng-binding").string
             except AttributeError:
@@ -68,8 +69,8 @@ class MainPage:
         progress_div = soup.find_all(class_="progress-bar")
         # print(progress_div) # Random bug of displaying
         # lots and lots of progress classes together
+        progress_text = "No progress scanned"
         for _progress in progress_div:
-            progress_text = "No progress scanned"
             try:
                 progress_text = _progress.find(class_="ng-binding").string
             except AttributeError:
@@ -94,6 +95,7 @@ class ProfilePage:
         self.user.created_at = datetime.datetime.utcnow().isoformat() + "Z"
         self.user.updated_at = datetime.datetime.utcnow().isoformat() + "Z"
         self.user.picture_url = self.get_picture_url(profile_page)
+        self.user.job_title = self.get_job_title(profile_page)
         (self.user.address['line1'],
          self.user.address['line2'],
          self.user.address['city'],
@@ -124,6 +126,15 @@ class ProfilePage:
         except AttributeError:
             pass
         return picture_url
+
+    def get_job_title(self, soup: BeautifulSoup) -> str:
+        job_title_text = "No job title scanned"
+        try:
+            job_title_text = soup.find_all(class_="white-space-nowrap")\
+                [0].parent.contents[0].string.strip()
+        except AttributeError as a:
+            pass
+        return job_title_text
 
     def get_address(self, soup: BeautifulSoup) \
             -> Tuple[str, str, str, str, str, str]:

@@ -2,8 +2,8 @@
   "visibility": "Public",
   "work_hours": "More than 30 hrs/week",
   "progress": "90%",
-  "created_at": "2021-06-20T03:01:12.725548Z",
-  "updated_at": "2021-06-20T03:01:12.725564Z",
+  "created_at": "2021-06-20T04:02:32.418743Z",
+  "updated_at": "2021-06-20T04:02:32.418759Z",
   "first_name": "Bob",
   "last_name": "S.",
   "full_name": "Bob S.",
@@ -15,5 +15,6 @@
     "state": "No state scanned",
     "postal_code": "No postal code scanned",
     "country": "Argentina"
-  }
+  },
+  "job_title": "Best DB administrator in the world"
 }
