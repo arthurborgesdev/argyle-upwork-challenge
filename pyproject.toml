@@ -7,10 +7,16 @@ authors = ["Arthur Borges <arthurborges.dev@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.8"
 beautifulsoup4 = "^4.9.3"
-asyncio = "^3.4.3"
+python-dotenv = "^0.17.1"
+playwright = "^1.12.1"
+pydantic = "^1.8.2"
+flake8 = "^3.9.2"
+mypy = "^0.902"
+lxml = "^4.6.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
+pytest-playwright = "^0.1.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
