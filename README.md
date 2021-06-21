@@ -80,6 +80,18 @@ Run tests with the command:
 - Run `poetry run flake8`
 - Run `poetry run mypy ./scanner`
 
+
+### Docker image build
+
+1 - Run `docker image build --tag scanner_spider:0.1.0 .`
+
+2 - Run `docker container run --name scanner_spider scanner_spider:0.1.0`
+
+3 - Run `docker container ls --all` to make sure the container has been created
+
+The step 2 will already run and output the contents of the scanned data
+
+
 ### Deployment
 
 TBD
