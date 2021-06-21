@@ -15,18 +15,18 @@ user_agent = ("Mozilla/5.0 (X11; Linux x86_64)"
               )
 
 
-def login_routine(page: Page) -> None:
+def login_handle(page: Page) -> None:
     login = LoginHandling()
-    login.username_login(page)
-    login.password_login(page)
-    login.secret_login(page)
+    login.username(page)
+    login.password(page)
+    login.secret(page)
 
 
-def scan_routine(user: User, page: Page) -> None:
+def scan_page(user: User, page: Page) -> None:
     main = MainPage(user)
-    main.scan_main_page(page)
+    main.scan(page)
     profile = ProfilePage(user)
-    profile.scan_profile_page(page)
+    profile.scan(page)
 
 
 def initiate_scan() -> None:
@@ -39,10 +39,10 @@ def initiate_scan() -> None:
         )
         page = context.new_page()
 
-        login_routine(page)
+        login_handle(page)
 
         user = User()
-        scan_routine(user, page)
+        scan_page(user, page)
 
         with open('scan_data.json', 'w') as outfile:
             json.dump(user.dict(), outfile)

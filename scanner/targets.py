@@ -35,8 +35,10 @@ class MainPage:
     def __init__(self, user: User) -> None:
         self.user = user
 
-    def scan_main_page(self, page: Page) -> None:
+    def scan(self, page: Page) -> None:
         # interact to trigger auto-wait
+        page.click("text=My Profile")
+        # interact twice to trigger auto-wait and get rid of no scans
         page.click("text=My Profile")
         current_page = page.content()
         main_page = BeautifulSoup(current_page, 'lxml')
@@ -83,7 +85,7 @@ class ProfilePage:
     def __init__(self, user: User) -> None:
         self.user = user
 
-    def scan_profile_page(self, page: Page) -> None:
+    def scan(self, page: Page) -> None:
         # First click to access the page
         page.click("text=View Profile")
         # Second click to trigger auto-wait until page finishes rendering
