@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup  # type: ignore
 from pydantic import BaseModel
 from typing import Any, Tuple, Dict
 import datetime
+import lxml
+import cchardet
 
 # For type annotations
 from playwright.sync_api import Page

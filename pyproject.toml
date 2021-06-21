@@ -13,6 +13,7 @@ pydantic = "^1.8.2"
 flake8 = "^3.9.2"
 mypy = "^0.902"
 lxml = "^4.6.3"
+cchardet = "^2.1.7"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
