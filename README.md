@@ -48,7 +48,7 @@ To get a local copy up and running follow these simple example steps:
 ### Setup
 
 - Go to a Terminal and clone the repository: `git clone git@github.com:arthurborgesdev/argyle-upwork-challenge.git`
-- Make sure you are on the correct branch (`main`, by the time of the project submission, or `development` for the most stable recent one before project submission)
+- Make sure you are on the correct branch (`main`)
 
 
 ### Install
@@ -90,11 +90,6 @@ Run tests with the command:
 3 - Run `docker container ls --all` to make sure the container has been created
 
 The step 2 will already run and output the contents of the scanned data
-
-
-### Deployment
-
-TBD
 
 
 ### Performance improvements and considerations
