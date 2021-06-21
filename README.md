@@ -110,6 +110,10 @@ TBD
 - Other optimizations involved changing html-parser to lxml in BeautifulSoup which improved performance.
 - Attempted to use cChardet to improve performance of BeautifulSoup by 10x as stated [here](https://thehftguy.com/2020/07/28/making-beautifulsoup-parsing-10-times-faster/) but it does now works in Pyenv... maybe it's a good fit for a Docker image using only pip, though.
 
+### Further documentation
+
+Please consult the current [pull requests!](https://github.com/arthurborgesdev/argyle-upwork-challenge/pulls)
+
 
 ## Author
 
