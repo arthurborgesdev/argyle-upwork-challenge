@@ -1,1 +1,21 @@
-{"visibility": "Public", "work_hours": "More than 30 hrs/week", "progress": "90%", "created_at": "2021-06-21T12:14:22.861086Z", "updated_at": "2021-06-21T12:14:22.861107Z", "first_name": "Bob", "last_name": "S.", "full_name": "Bob S.", "picture_url": "https://www.upwork.com/profile-portraits/c1s5uKXKHAkmbAMlvDYlBVERPiRcVTlQN0Kck3OSeNjB6W69xAqG2pPHirqicJzqx-", "address": {"line1": "No address line1 scanned", "line2": "No address line2 scanned", "city": "Buenos Aires", "state": "No state scanned", "postal_code": "No postal code scanned", "country": "Argentina"}, "job_title": "Best DB administrator in the world", "payment_rate": "$500.00/hr"}
+{
+  "visibility": "Public",
+  "work_hours": "More than 30 hrs/week",
+  "progress": "90%",
+  "created_at": "2021-06-21T12:42:32.746967Z",
+  "updated_at": "2021-06-21T12:42:32.746982Z",
+  "first_name": "Bob",
+  "last_name": "S.",
+  "full_name": "Bob S.",
+  "picture_url": "https://www.upwork.com/profile-portraits/c1s5uKXKHAkmbAMlvDYlBVERPiRcVTlQN0Kck3OSeNjB6W69xAqG2pPHirqicJzqx-",
+  "address": {
+    "line1": "No address line1 scanned",
+    "line2": "No address line2 scanned",
+    "city": "Buenos Aires",
+    "state": "No state scanned",
+    "postal_code": "No postal code scanned",
+    "country": "Argentina"
+  },
+  "job_title": "Best DB administrator in the world",
+  "payment_rate": "$500.00/hr"
+}
