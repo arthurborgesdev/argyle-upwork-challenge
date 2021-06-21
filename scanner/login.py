@@ -12,16 +12,16 @@ secret = login_credentials["SECRET"]
 
 class LoginHandling:
 
-    def username_login(self, page: Page) -> None:
+    def username(self, page: Page) -> None:
         page.goto(portal_link)
         page.fill('#login_username', username)
         page.click('#login_password_continue')
 
-    def password_login(self, page: Page) -> None:
+    def password(self, page: Page) -> None:
         page.fill('#login_password', password)
         page.click('#login_control_continue')
 
-    def secret_login(self, page: Page) -> None:
+    def secret(self, page: Page) -> None:
         try:
             page.wait_for_selector("text=Let's make sure it's you", timeout=5)
             page.fill('#login_answer', secret)

@@ -107,17 +107,26 @@ TBD
   - To a custom solution from scratch?
     Maybe (need more studies and a MVP from scratch using httpx, for example)
 
-- Other optimizations involved changing html-parser to lxml in BeautifulSoup which improved performance.
-- Attempted to use cChardet to improve performance of BeautifulSoup by 10x as stated [here](https://thehftguy.com/2020/07/28/making-beautifulsoup-parsing-10-times-faster/) but it does now works in Pyenv... maybe it's a good fit for a Docker image using only pip, though.
+- Other optimizations were made and involved changing html-parser to lxml in BeautifulSoup which improved performance.
+- Used cChardet to improve performance of BeautifulSoup by 10x as stated [here](https://thehftguy.com/2020/07/28/making-beautifulsoup-parsing-10-times-faster/) but it improved "only" ~16%.
 
 - Comparisson between python virtualenv local machine (Ubuntu 20.04/Core i5 - 2410M) and a Docker container on the same local machine:
 
-- Local: ~25s
-- Local(with docker): ~18s
+Local machine specs:
+- Ubuntu 20.04
+- [Core i5-2410M](https://ark.intel.com/content/www/us/en/ark/products/52224/intel-core-i5-2410m-processor-3m-cache-up-to-2-90-ghz.html)
+- 8 GB DDR3 1333 MHz
+- 240 GB SSD
+
+| Machines/Environments     | Without cChardet | With cChardet |
+| ------------------------- | ---------------- | ------------- |
+| Local                     |       ~25s       |      ~21s     |
+| Local (Docker container)  |       ~18s       |      ~18s     |
+
 
 ### Further documentation
 
-Please consult the current [pull requests!](https://github.com/arthurborgesdev/argyle-upwork-challenge/pulls)
+Please consult the [pull requests!](https://github.com/arthurborgesdev/argyle-upwork-challenge/pulls)
 
 
 ## Author
