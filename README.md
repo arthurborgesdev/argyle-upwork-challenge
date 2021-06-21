@@ -122,8 +122,6 @@ Local machine specs:
 | ------------------------- | ---------------- | ------------- |
 | Local                     |       ~25s       |      ~21s     |
 | Local (Docker container)  |       ~18s       |      ~18s     |
-| Google Cloud Platform     |                  |               |
-|                           |                  |               |
 
 
 ### Further documentation
